@@ -176,15 +176,15 @@ namespace MonoMidi
                 case PlatformID.WinCE:
                 {
                     System.IO.BinaryReader br = new System.IO.BinaryReader(new System.IO.MemoryStream(buffer));
-                    while (br.BaseStream.Position < br.BaseStream.Length)
+					while (br.BaseStream.Position < br.BaseStream.Length)
                     {
                         byte msgtype = br.ReadByte();
                         byte param1 = 0;
                         byte param2 = 0;
-                        if (br.BaseStream.Position < br.BaseStream.Length)
+						if (br.BaseStream.Position < br.BaseStream.Length)
                         {
                             param1 = br.ReadByte();
-                            if (br.BaseStream.Position < br.BaseStream.Length)
+							if (br.BaseStream.Position < br.BaseStream.Length)
                             {
                                 param2 = br.ReadByte();
                             }
