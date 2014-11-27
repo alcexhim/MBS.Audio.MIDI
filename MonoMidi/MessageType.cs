@@ -5,8 +5,9 @@ using System.Text;
 
 namespace MonoMidi
 {
-    public enum MessageType : byte
-    {
-        ControlChange = 0xB0
-    }
+	public enum MessageType : byte
+	{
+		ControlChange = 0xB0,
+		Note = 0x90
+	}
 }
