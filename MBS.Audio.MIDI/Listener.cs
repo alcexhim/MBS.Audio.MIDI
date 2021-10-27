@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MonoMidi
+namespace MBS.Audio.MIDI
 {
     public class Listener
     {
-        private static MonoMidi.InputDevice input = null;
-        private static MonoMidi.OutputDevice output = null;
-        public static MonoMidi.OutputDevice OutputDevice { get { return output; } }
+        private static MBS.Audio.MIDI.InputDevice input = null;
+        private static MBS.Audio.MIDI.OutputDevice output = null;
+        public static MBS.Audio.MIDI.OutputDevice OutputDevice { get { return output; } }
 
-        private static MonoMidi.SoundCard sc = null;
+        private static MBS.Audio.MIDI.SoundCard sc = null;
         private static MessageReceivedEventHandler eventHandler = null;
 
         public static void Start()
         {
-            sc = MonoMidi.SoundCard.GetDefaultSoundCard();
+            sc = MBS.Audio.MIDI.SoundCard.GetDefaultSoundCard();
 			if (sc != null)
 			{
 				sc.Open();
@@ -50,7 +50,7 @@ namespace MonoMidi
         }
 
         public static event MessageReceivedEventHandler MessageReceived;
-        private static void Listener_MessageReceived(object sender, MonoMidi.MessageReceivedEventArgs e)
+        private static void Listener_MessageReceived(object sender, MBS.Audio.MIDI.MessageReceivedEventArgs e)
         {
             if (MessageReceived != null) MessageReceived(sender, e);
         }

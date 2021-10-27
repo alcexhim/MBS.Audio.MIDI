@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MonoMidi.TestProject
+namespace MBS.Audio.MIDI.TestProject
 {
 	class Program
 	{

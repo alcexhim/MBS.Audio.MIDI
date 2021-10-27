@@ -4,18 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{292D06E7-0EBD-461D-B46C-737360D2B670}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{DDC1CE36-60E0-4B09-A288-CB14ACE252DD}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MonoMidi.TestProject</RootNamespace>
-    <AssemblyName>MonoMidi.TestProject</AssemblyName>
+    <RootNamespace>MBS.Audio.MIDI</RootNamespace>
+    <AssemblyName>MBS.Audio.MIDI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>False</Optimize>
@@ -25,7 +24,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>True</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -38,14 +36,23 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Device.cs" />
+    <Compile Include="DeviceOptionalFunctionality.cs" />
+    <Compile Include="DeviceType.cs" />
+    <Compile Include="InputDevice.cs" />
+    <Compile Include="Internal\Windows\Constants.cs" />
+    <Compile Include="Internal\Windows\Delegates.cs" />
+    <Compile Include="Internal\Windows\Methods.cs" />
+    <Compile Include="Internal\Windows\Structures.cs" />
+    <Compile Include="Listener.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageType.cs" />
+    <Compile Include="OutputDevice.cs" />
+    <Compile Include="MessageReceivedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MonoMidi\MonoMidi.csproj">
-      <Project>{DDC1CE36-60E0-4B09-A288-CB14ACE252DD}</Project>
-      <Name>MonoMidi</Name>
-    </ProjectReference>
+    <Compile Include="SoundCard.cs" />
+    <Compile Include="Internal\Linux\Alsa\Methods.cs" />
+    <Compile Include="Internal\Linux\Alsa\Constants.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -55,4 +62,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup />
 </Project>

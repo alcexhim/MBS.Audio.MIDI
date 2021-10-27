@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace MonoMidi.Internal.Windows
+namespace MBS.Audio.MIDI.Internal.Windows
 {
 	internal static class Methods
 	{

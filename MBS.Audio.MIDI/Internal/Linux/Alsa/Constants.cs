@@ -20,7 +20,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 
-namespace MonoMidi.Internal.Linux.Alsa
+namespace MBS.Audio.MIDI.Internal.Linux.Alsa
 {
     internal static class Constants
     {
