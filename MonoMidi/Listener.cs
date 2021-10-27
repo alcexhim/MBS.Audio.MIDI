@@ -17,21 +17,23 @@ namespace MonoMidi
         public static void Start()
         {
             sc = MonoMidi.SoundCard.GetDefaultSoundCard();
-            sc.Open();
-            input = sc.GetDefaultMidiInputDevice();
-            // output = sc.GetMidiOutputDevices()[1];
-
-            eventHandler = new MessageReceivedEventHandler(Listener_MessageReceived);
-            if (input != null)
-            {
-                input.Open();
-                input.MessageReceived += eventHandler;
-                input.Start();
-            }
-            if (output != null)
-            {
-                output.Open();
-            }
+			if (sc != null)
+			{
+				sc.Open();
+				input = sc.GetDefaultMidiInputDevice();
+				// output = sc.GetMidiOutputDevices()[1];
+			}
+			eventHandler = new MessageReceivedEventHandler(Listener_MessageReceived);
+			if (input != null)
+			{
+				input.Open();
+				input.MessageReceived += eventHandler;
+				input.Start();
+			}
+			if (output != null)
+			{
+				output.Open();
+			}
         }
         public static void Stop()
         {
