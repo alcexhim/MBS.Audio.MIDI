@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonoMidi
+namespace MBS.Audio.MIDI
 {
 	public class SoundCard
 	{

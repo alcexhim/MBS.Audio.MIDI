@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MonoMidi
+namespace MBS.Audio.MIDI
 {
 	public delegate void MessageReceivedEventHandler(object sender, MessageReceivedEventArgs e);
 	public class MessageReceivedEventArgs : EventArgs

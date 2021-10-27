@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MonoMidi
+namespace MBS.Audio.MIDI
 {
 #if !DEBUG
 	[System.Diagnostics.DebuggerNonUserCode()]

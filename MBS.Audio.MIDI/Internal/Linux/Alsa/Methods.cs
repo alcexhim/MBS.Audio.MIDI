@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace MonoMidi.Internal.Linux.Alsa
+namespace MBS.Audio.MIDI.Internal.Linux.Alsa
 {
 	internal static class Methods
 	{

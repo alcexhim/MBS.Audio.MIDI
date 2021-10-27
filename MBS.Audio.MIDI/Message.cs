@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MonoMidi
+namespace MBS.Audio.MIDI
 {
     [System.Diagnostics.DebuggerNonUserCode()]
     public class Message
@@ -53,7 +53,7 @@ namespace MonoMidi
             }
         }
 
-        public Message(MonoMidi.MessageType messageType, byte channel, byte parameter1, byte parameter2)
+        public Message(MBS.Audio.MIDI.MessageType messageType, byte channel, byte parameter1, byte parameter2)
         {
             mvarMessageType = messageType;
             Channel = channel;
