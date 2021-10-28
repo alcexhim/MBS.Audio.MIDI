@@ -32,7 +32,7 @@ namespace MBS.Audio.MIDI
 				{
                     IntPtr dummy = IntPtr.Zero;
                     mvarHandle = IntPtr.Zero;
-                    Internal.Linux.Alsa.Methods.snd_rawmidi_open(ref mvarHandle, ref dummy, "hw:" + mvarID.ToString() + "," + mvarParent.ID.ToString() + ",0", 0);
+                    Internal.Linux.Alsa.Methods.snd_rawmidi_open(ref mvarHandle, ref dummy, "hw:" + mvarParent.ID.ToString() + "," + ID.ToString() + ",0", 0);
 
                     byHandle.Add(mvarHandle, this);
 					return;
