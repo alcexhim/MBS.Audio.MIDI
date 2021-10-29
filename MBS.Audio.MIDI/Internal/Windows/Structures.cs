@@ -14,7 +14,7 @@ namespace MBS.Audio.MIDI.Internal.Windows
 			/// <summary>
 			/// Manufacturer identifier of the device driver for the MIDI output device.
 			/// </summary>
-			public ushort	wMid;
+			public ushort wMid;
 			/// <summary>
 			/// Product identifier of the MIDI output device.
 			/// </summary>
@@ -48,12 +48,12 @@ namespace MBS.Audio.MIDI.Internal.Windows
 			/// Number of voices supported by an internal synthesizer device. If the device is a port,
 			/// this member is not meaningful and is set to 0.
 			/// </summary>
-			public ushort	wVoices;
+			public ushort wVoices;
 			/// <summary>
 			/// Maximum number of simultaneous notes that can be played by an internal synthesizer
 			/// device. If the device is a port, this member is not meaningful and is set to 0.
 			/// </summary>
-			public ushort	wNotes;
+			public ushort wNotes;
 			/// <summary>
 			/// Channels that an internal synthesizer device responds to, where the least significant
 			/// bit refers to channel 0 and the most significant bit to channel 15. Port devices that
@@ -69,8 +69,8 @@ namespace MBS.Audio.MIDI.Internal.Windows
 		[StructLayout(LayoutKind.Sequential)]
 		public struct MIDIINCAPS
 		{
-			public ushort	wMid;
-			public ushort	wPid;
+			public ushort wMid;
+			public ushort wPid;
 
 			#region MMVERSION
 			/// <summary>

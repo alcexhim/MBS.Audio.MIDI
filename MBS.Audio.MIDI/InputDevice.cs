@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MBS.Audio.MIDI
 {
@@ -61,16 +59,34 @@ namespace MBS.Audio.MIDI
 
         private Internal.Windows.Delegates.MidiCallback mvarCallback = null;
 
-        /// <summary>
-        /// Starts listening for MIDI input.
-        /// </summary>
-        public void Start()
+		private System.Threading.Thread tLinuxThread = null;
+		private void tLinuxThread_ThreadStart()
+		{
+			while (true)
+			{
+				byte[] buffer = new byte[16];
+				Internal.Linux.Alsa.Methods.snd_rawmidi_read(mvarHandle, buffer, buffer.Length);
+
+				byte channelId = (byte)(((byte)(buffer[0] << 4)) >> 4);
+				byte messageTypeId = (byte)((byte)(buffer[0] >> 4) << 4);
+				OnMessageReceived(new MessageReceivedEventArgs(new Message((MessageType)messageTypeId, (byte)(channelId + 1), buffer[1], buffer[2]), IntPtr.Zero));
+					
+				System.Threading.Thread.Sleep(10);
+			}
+		}
+
+		/// <summary>
+		/// Starts listening for MIDI input.
+		/// </summary>
+		public void Start()
         {
             switch (Environment.OSVersion.Platform)
             {
                 case PlatformID.MacOSX:
                 case PlatformID.Unix:
                 {
+					tLinuxThread = new System.Threading.Thread(tLinuxThread_ThreadStart);
+					tLinuxThread.Start();
                     break;
                 }
                 case PlatformID.Win32NT:

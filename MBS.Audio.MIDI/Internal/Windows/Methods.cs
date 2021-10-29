@@ -18,11 +18,11 @@ namespace MBS.Audio.MIDI.Internal.Windows
 		[DllImport(LIBRARY_FILENAME)]
 		public static extern Constants.MidiError midiInGetDevCaps(uint uDeviceID, out Structures.MIDIINCAPS lpMidiInCaps, uint cbMidiInCaps);
 		[DllImport(LIBRARY_FILENAME)]
-        public static extern Constants.MidiError midiInReset(IntPtr hmo);
-        [DllImport(LIBRARY_FILENAME)]
-        public static extern Constants.MidiError midiInStart(IntPtr hMidiIn);
-        [DllImport(LIBRARY_FILENAME)]
-        public static extern Constants.MidiError midiInStop(IntPtr hMidiIn);
+		public static extern Constants.MidiError midiInReset(IntPtr hmo);
+		[DllImport(LIBRARY_FILENAME)]
+		public static extern Constants.MidiError midiInStart(IntPtr hMidiIn);
+		[DllImport(LIBRARY_FILENAME)]
+		public static extern Constants.MidiError midiInStop(IntPtr hMidiIn);
 		[DllImport(LIBRARY_FILENAME)]
 		public static extern Constants.MidiError midiInClose(IntPtr hmo);
 		#endregion
@@ -56,9 +56,9 @@ namespace MBS.Audio.MIDI.Internal.Windows
 		[DllImport(LIBRARY_FILENAME)]
 		public static extern Constants.MidiError midiOutReset(IntPtr hmo);
 		[DllImport(LIBRARY_FILENAME)]
-        public static extern Constants.MidiError midiOutClose(IntPtr hmo);
-        [DllImport(LIBRARY_FILENAME)]
-        public static extern Constants.MidiError midiOutShortMsg(uint mvarID, int dwMsg);
+		public static extern Constants.MidiError midiOutClose(IntPtr hmo);
+		[DllImport(LIBRARY_FILENAME)]
+		public static extern Constants.MidiError midiOutShortMsg(uint mvarID, int dwMsg);
 		#endregion
 
 		[System.Diagnostics.DebuggerNonUserCode()]
@@ -84,5 +84,5 @@ namespace MBS.Audio.MIDI.Internal.Windows
 				}
 			}
 		}
-    }
+	}
 }

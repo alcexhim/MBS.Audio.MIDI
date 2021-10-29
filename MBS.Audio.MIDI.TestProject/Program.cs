@@ -14,6 +14,7 @@ namespace MBS.Audio.MIDI.TestProject
 
 			// Launchpad: Message 144, channel 1, param1=button ID, param2=off(0) or on(127)
 
+			// TestOutput();
 			TestInput();
 			return;
 
@@ -21,8 +22,8 @@ namespace MBS.Audio.MIDI.TestProject
 		}
 
 		private static void TestOutput()
-		{// SoundCard card = SoundCard.GetSoundCardByID(1);
-			SoundCard card = SoundCard.GetSoundCardByID(0);
+		{
+			SoundCard card = SoundCard.GetSoundCardByID(1);
 			card.Open();
 
 			// OutputDevice od = card.GetDefaultMidiOutputDevice();
@@ -105,10 +106,10 @@ namespace MBS.Audio.MIDI.TestProject
 			// 8, 9, 10, 11
 			// 12, 13, 14, 15
 
-
+			/*
 			for (byte i = 0; i < 127; i++)
 			{
-				od.Send(new Message(MessageType.Note, 1, i, 0));
+				od.Send(new Message(MessageType.NoteOn, 1, i, 0));
 			}
 
 			for (byte i = 0; i < 127; i++)
@@ -116,13 +117,17 @@ namespace MBS.Audio.MIDI.TestProject
 				Console.WriteLine("note id: " + i.ToString());
 				for (int j = 0; j < 3; j++)
 				{
-					od.Send(new Message(MessageType.Note, 1, i, 127));
+					od.Send(new Message(MessageType.NoteOn, 1, i, 127));
 					System.Threading.Thread.Sleep(100);
-					od.Send(new Message(MessageType.Note, 1, i, 0));
+					od.Send(new Message(MessageType.NoteOn, 1, i, 0));
 					System.Threading.Thread.Sleep(100);
 				}
 				System.Threading.Thread.Sleep(300);
 			}
+			*/
+
+			od.Send(new Message(MessageType.NoteOn, 10, 36, 127));
+			od.Flush();
 
 			Console.WriteLine("Flushing and closing device");
 			od.Close();
@@ -131,8 +136,22 @@ namespace MBS.Audio.MIDI.TestProject
 			card.Close();
 		}
 		private static void TestInput()
-		{// SoundCard card = SoundCard.GetSoundCardByID(1);
-			SoundCard card = SoundCard.GetSoundCardByID(0);
+		{
+			SoundCard[] cards = SoundCard.GetAllSoundCards();
+			if (cards.Length == 0)
+			{
+			}
+
+			SoundCard card = null;
+			if (cards.Length == 1)
+			{
+				card = cards[0];
+			}
+			else
+			{
+				card = cards[1];
+			}
+
 			card.Open();
 
 			// OutputDevice od = card.GetDefaultMidiOutputDevice();
@@ -220,7 +239,7 @@ namespace MBS.Audio.MIDI.TestProject
 		{
 			Console.WriteLine("MonoMidi: receiving channel " + e.Message.Channel.ToString() + " message " + e.Message.MessageType.ToString() + " (" + e.Message.Parameter1.ToString() + ", " + e.Message.Parameter2.ToString() + ")");
 		}
-		
+
 		public static void Pause()
 		{
 			Console.Write("Press any key to continue . . .");
@@ -234,7 +253,7 @@ namespace MBS.Audio.MIDI.TestProject
 			foreach (SoundCard card in cards)
 			{
 				Console.WriteLine("Soundcard found: " + card.ID.ToString());
-				
+
 				card.Open();
 				InputDevice[] devices = card.GetMidiInputDevices();
 				foreach (InputDevice device in devices)

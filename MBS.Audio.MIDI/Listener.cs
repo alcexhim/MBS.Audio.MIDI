@@ -7,27 +7,31 @@ namespace MBS.Audio.MIDI
 {
     public class Listener
     {
-        private static MBS.Audio.MIDI.InputDevice input = null;
-        private static MBS.Audio.MIDI.OutputDevice output = null;
-        public static MBS.Audio.MIDI.OutputDevice OutputDevice { get { return output; } }
+        private MBS.Audio.MIDI.InputDevice input = null;
+        private MBS.Audio.MIDI.OutputDevice output = null;
+        public MBS.Audio.MIDI.OutputDevice OutputDevice { get { return output; } }
 
-        private static MBS.Audio.MIDI.SoundCard sc = null;
-        private static MessageReceivedEventHandler eventHandler = null;
+        public SoundCard SoundCard { get; set; } = null;
 
-        public static void Start()
+		private static MessageReceivedEventHandler eventHandler = null;
+
+        public void Start()
         {
-            sc = MBS.Audio.MIDI.SoundCard.GetDefaultSoundCard();
-			if (sc != null)
+			if (SoundCard == null)
 			{
-				sc.Open();
-				input = sc.GetDefaultMidiInputDevice();
+				SoundCard = SoundCard.GetDefaultSoundCard();
+			}
+			if (SoundCard != null)
+			{
+				SoundCard.Open();
+				input = SoundCard.GetDefaultMidiInputDevice();
 				// output = sc.GetMidiOutputDevices()[1];
 			}
-			eventHandler = new MessageReceivedEventHandler(Listener_MessageReceived);
+
 			if (input != null)
 			{
 				input.Open();
-				input.MessageReceived += eventHandler;
+				input.MessageReceived += Listener_MessageReceived;
 				input.Start();
 			}
 			if (output != null)
@@ -35,7 +39,7 @@ namespace MBS.Audio.MIDI
 				output.Open();
 			}
         }
-        public static void Stop()
+        public void Stop()
         {
             if (input != null)
             {
@@ -46,13 +50,18 @@ namespace MBS.Audio.MIDI
             {
                 output.Close();
             }
-            sc.Close();
+			SoundCard.Close();
         }
 
-        public static event MessageReceivedEventHandler MessageReceived;
-        private static void Listener_MessageReceived(object sender, MBS.Audio.MIDI.MessageReceivedEventArgs e)
+        public event MessageReceivedEventHandler MessageReceived;
+		protected virtual void OnMessageReceived(MessageReceivedEventArgs e)
+		{
+			MessageReceived?.Invoke(this, e);
+		}
+
+		private void Listener_MessageReceived(object sender, MBS.Audio.MIDI.MessageReceivedEventArgs e)
         {
-            if (MessageReceived != null) MessageReceived(sender, e);
+			OnMessageReceived(e);
         }
     }
 }

@@ -81,7 +81,7 @@ namespace MBS.Audio.MIDI
 				case PlatformID.Unix:
 				{
 					mvarHandle = IntPtr.Zero;
-					int error = Internal.Linux.Alsa.Methods.snd_ctl_open(ref mvarHandle, "hw:" + mvarID.ToString(), 0);
+					int error = Internal.Linux.Alsa.Methods.snd_ctl_open(ref mvarHandle, "hw:" + mvarID.ToString(), Internal.Linux.Alsa.Constants.SoundOpenFlags.None);
 					Internal.Linux.Alsa.Methods.snd_error_code_to_exception(error);
 					return;
 				}
@@ -105,22 +105,22 @@ namespace MBS.Audio.MIDI
 			{
 				case PlatformID.MacOSX:
 				case PlatformID.Unix:
-					{
-						Internal.Linux.Alsa.Methods.snd_ctl_close(mvarHandle);
-						mvarHandle = IntPtr.Zero;
-						return;
-					}
+				{
+					Internal.Linux.Alsa.Methods.snd_ctl_close(mvarHandle);
+					mvarHandle = IntPtr.Zero;
+					return;
+				}
 				case PlatformID.Win32NT:
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-					{
-						return;
-					}
+				{
+					return;
+				}
 				case PlatformID.Xbox:
-					{
-						break;
-					}
+				{
+					break;
+				}
 			}
 			throw new PlatformNotSupportedException();
 		}

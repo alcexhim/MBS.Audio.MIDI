@@ -22,13 +22,33 @@ using System;
 
 namespace MBS.Audio.MIDI.Internal.Linux.Alsa
 {
-    internal static class Constants
-    {
-        public enum snd_rawmidi_stream
-        {
-            Output = 0,
-            Input = 1
-        }
-    }
-}
+	internal static class Constants
+	{
+		public enum snd_rawmidi_stream
+		{
+			Output = 0,
+			Input = 1
+		}
 
+		[Flags()]
+		public enum SoundOpenFlags
+		{
+			/// <summary>
+			/// No flags specified
+			/// </summary>
+			None = 0x0000,
+			/// <summary>
+			/// Non-blocking mode
+			/// </summary>
+			NonBlocking = 0x0001,
+			/// <summary>
+			/// Async notification
+			/// </summary>
+			Async = 0x0002,
+			/// <summary>
+			/// Read-only mode
+			/// </summary>
+			ReadOnly = 0x0004
+		}
+	}
+}
