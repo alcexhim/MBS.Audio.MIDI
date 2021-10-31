@@ -7,9 +7,7 @@ namespace MBS.Audio.MIDI
 {
     public class Listener
     {
-        private MBS.Audio.MIDI.InputDevice input = null;
-        private MBS.Audio.MIDI.OutputDevice output = null;
-        public MBS.Audio.MIDI.OutputDevice OutputDevice { get { return output; } }
+		public MidiDevice InputDevice { get; private set; } = null;
 
         public SoundCard SoundCard { get; set; } = null;
 
@@ -24,31 +22,26 @@ namespace MBS.Audio.MIDI
 			if (SoundCard != null)
 			{
 				SoundCard.Open();
-				input = SoundCard.GetDefaultMidiInputDevice();
+				if (InputDevice == null)
+				{
+					InputDevice = SoundCard.GetDefaultMidiInputDevice();
+				}
 				// output = sc.GetMidiOutputDevices()[1];
 			}
 
-			if (input != null)
+			if (InputDevice != null)
 			{
-				input.Open();
-				input.MessageReceived += Listener_MessageReceived;
-				input.Start();
-			}
-			if (output != null)
-			{
-				output.Open();
+				InputDevice.Open();
+				InputDevice.MessageReceived += Listener_MessageReceived;
+				InputDevice.Start();
 			}
         }
         public void Stop()
         {
-            if (input != null)
+            if (InputDevice != null)
             {
-                input.Stop();
-                input.Close();
-            }
-            if (output != null)
-            {
-                output.Close();
+				InputDevice.Stop();
+				InputDevice.Close();
             }
 			SoundCard.Close();
         }

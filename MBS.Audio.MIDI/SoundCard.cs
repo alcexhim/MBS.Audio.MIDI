@@ -125,13 +125,13 @@ namespace MBS.Audio.MIDI
 			throw new PlatformNotSupportedException();
 		}
 
-		public InputDevice GetDefaultMidiInputDevice()
+		public MidiDevice GetDefaultMidiInputDevice()
 		{
-			InputDevice[] devices = GetMidiInputDevices();
+			MidiDevice[] devices = GetMidiInputDevices();
 			if (devices.Length == 0) return null;
 			return devices[0];
 		}
-		public InputDevice[] GetMidiInputDevices()
+		public MidiDevice[] GetMidiInputDevices()
 		{
 			switch (Environment.OSVersion.Platform)
 			{
@@ -142,7 +142,7 @@ namespace MBS.Audio.MIDI
 
 					// Start with the first MIDI device on this card
 					int devNum = -1;
-					List<InputDevice> devices = new List<InputDevice>();
+					List<MidiDevice> devices = new List<MidiDevice>();
 					while (true)
 					{
 						// Get the number of the next MIDI device on this card
@@ -154,7 +154,7 @@ namespace MBS.Audio.MIDI
 						// at all, for example if it's only a digital audio card
 						if (devNum < 0) break;
 
-						InputDevice device = new InputDevice((uint)devNum, this);
+						MidiDevice device = new MidiDevice((uint)devNum, this);
 						if (device == null) continue;
 
 						devices.Add(device);
@@ -167,10 +167,10 @@ namespace MBS.Audio.MIDI
 				case PlatformID.WinCE:
 				{
 					uint count = Internal.Windows.Methods.midiInGetNumDevs();
-					List<InputDevice> list = new List<InputDevice>();
+					List<MidiDevice> list = new List<MidiDevice>();
 					for (uint i = 0; i < count; i++)
 					{
-						InputDevice device = new InputDevice(i, this);
+						MidiDevice device = new MidiDevice(i, this);
 						if (device == null) continue;
 						list.Add(device);
 					}
@@ -183,13 +183,13 @@ namespace MBS.Audio.MIDI
 			}
 			throw new PlatformNotSupportedException();
 		}
-		public OutputDevice GetDefaultMidiOutputDevice()
+		public MidiDevice GetDefaultMidiOutputDevice()
 		{
-			OutputDevice[] devices = GetMidiOutputDevices();
+			MidiDevice[] devices = GetMidiOutputDevices();
 			if (devices.Length == 0) return null;
 			return devices[0];
 		}
-		public OutputDevice[] GetMidiOutputDevices()
+		public MidiDevice[] GetMidiOutputDevices()
 		{
 			switch (Environment.OSVersion.Platform)
 			{
@@ -198,7 +198,7 @@ namespace MBS.Audio.MIDI
 				{
 					// Start with the first MIDI device on this card
 					int devNum = -1;
-					List<OutputDevice> devices = new List<OutputDevice>();
+					List<MidiDevice> devices = new List<MidiDevice>();
 					while (true)
 					{
 						// Get the number of the next MIDI device on this card
@@ -210,7 +210,7 @@ namespace MBS.Audio.MIDI
 						// at all, for example if it's only a digital audio card
 						if (devNum < 0) break;
 
-						OutputDevice device = new OutputDevice((uint)devNum, this);
+						MidiDevice device = new MidiDevice((uint)devNum, this);
 						if (device == null) continue;
 
 						devices.Add(device);
@@ -221,23 +221,37 @@ namespace MBS.Audio.MIDI
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-				{
-					uint count = Internal.Windows.Methods.midiOutGetNumDevs();
-					List<OutputDevice> list = new List<OutputDevice>();
-					for (uint i = 0; i < count; i++)
 					{
-						OutputDevice device = new OutputDevice(i, this);
-						if (device == null) continue;
-						list.Add(device);
+						uint count = Internal.Windows.Methods.midiOutGetNumDevs();
+						List<MidiDevice> list = new List<MidiDevice>();
+						for (uint i = 0; i < count; i++)
+						{
+							MidiDevice device = new MidiDevice(i, this);
+							if (device == null) continue;
+							list.Add(device);
+						}
+						return list.ToArray();
 					}
-					return list.ToArray();
-				}
 				case PlatformID.Xbox:
 				{
 					break;
 				}
 			}
 			throw new PlatformNotSupportedException();
+		}
+
+		public MidiDevice[] GetMidiDevices(MidiDeviceFunctionality functionality)
+		{
+			List<MidiDevice> list = new List<MidiDevice>();
+			if ((functionality & MidiDeviceFunctionality.Input) == MidiDeviceFunctionality.Input)
+			{
+				list.AddRange(GetMidiInputDevices());
+			}
+			if ((functionality & MidiDeviceFunctionality.Input) == MidiDeviceFunctionality.Input)
+			{
+				list.AddRange(GetMidiOutputDevices());
+			}
+			return list.ToArray();
 		}
 	}
 }
